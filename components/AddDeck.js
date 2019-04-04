@@ -69,7 +69,7 @@ class AddDeck extends Component{
     onPress = {() => this.clearAsyncStorage()}>
     <Text style = {styles.submitButtonText}>clearAsyncStorage</Text>
     </TouchableOpacity>*/}
-    {Decks ?<Decks arry={this.state.arr}/> : null}
+    {Decks ?<Decks arry={this.state.arr} deckAdded={this.state.deckAdded}/> : null}
     {/*{Ex?<Ex arry={this.state.arr}/>:null}*/}
 
     </View>

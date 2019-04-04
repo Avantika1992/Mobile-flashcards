@@ -6,18 +6,17 @@ import {deckAdding} from './AddDeck'
 
 class Decks extends Component{
   state = {
-      deckAdded: '',
-      arr:[]
+      arrayDecks:[]
    }
   componentDidMount(){
-    d=this.state.deckAdded
+    d=this.props.deckAdded
     AsyncStorage.getItem('decksAsy')
     .then((decksAsy) => {
       const c = decksAsy ? JSON.parse(decksAsy) : [];
       c.push(d);
       AsyncStorage.setItem('decksAsy', JSON.stringify(c));
       this.setState({
-        arr: this.state.arr.concat(d)
+        arrayDecks: this.state.arrayDecks.concat(d)
       })
       alert(c)
     });
@@ -25,9 +24,9 @@ class Decks extends Component{
   render(){
 
     alert(this.props.arr)
-    dec=this.state.arr&&Object.keys(this.state.arr).map((key) => {
+    dec=this.state.arr&&Object.keys(this.state.arrayDecks).map((key) => {
     return (
-      <Text key={key}>{this.state.arr[key]}{"\n"}</Text>
+      <Text key={key}>{this.state.arrayDecks[key]}{"\n"}</Text>
     )
  })
  return(
@@ -35,7 +34,7 @@ class Decks extends Component{
    <Text onPress={()=>this.props.navigation.navigate(
      'DeckView'
    )} style={styles.textdeco}>{dec}</Text>
-   <Text>{this.state.arr}</Text>
+   <Text>{this.state.arrayDecks}</Text>
    </View>
  )
 }
