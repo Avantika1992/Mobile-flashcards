@@ -69,8 +69,8 @@ class AddDeck extends Component{
     <Text style = {styles.submitButtonText}>Create Deck</Text>
     </TouchableOpacity>
 
-    {Decks===[] ?<Decks arry={'hi'}/> : null}
-    {Ex===[]?null:<Ex arry={this.state.arr}/>}
+    {Decks ?<Decks arry={this.state.arr}/> : null}
+    {Ex?<Ex arry={this.state.arr}/>:null}
 
     </View>
   )

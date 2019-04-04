@@ -9,9 +9,9 @@ class Decks extends Component{
   render(){
 
     alert(this.props.arry)
-    dec=Object.keys(deckAdding).map((key) => {
+    dec=this.props.arry&&Object.keys(this.props.arry).map((key) => {
     return (
-      <Text key={key}>{deckAdding[key].name}{"\n"}</Text>
+      <Text key={key}>{this.props.arry[key]}{"\n"}</Text>
     )
  })
  return(
