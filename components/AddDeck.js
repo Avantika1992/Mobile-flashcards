@@ -25,9 +25,6 @@ class AddDeck extends Component{
      this.setState({
        arr: arr.concat(da)
      })
-     this.props.dispatch(addDeck({[key]:da}))
-     alert(arr)
-     submitEntry({key,da})
    }
 
 
@@ -65,12 +62,15 @@ class AddDeck extends Component{
              />
 
     <TouchableOpacity style = {styles.submitButton}
-    onPress = {() => this.submitDeck()}>
+    onPress = {() => this.SubmitSaveDeckAsync()}>
     <Text style = {styles.submitButtonText}>Create Deck</Text>
     </TouchableOpacity>
-
+    {/*<TouchableOpacity style = {styles.submitButton}
+    onPress = {() => this.clearAsyncStorage()}>
+    <Text style = {styles.submitButtonText}>clearAsyncStorage</Text>
+    </TouchableOpacity>*/}
     {Decks ?<Decks arry={this.state.arr}/> : null}
-    {Ex?<Ex arry={this.state.arr}/>:null}
+    {/*{Ex?<Ex arry={this.state.arr}/>:null}*/}
 
     </View>
   )
