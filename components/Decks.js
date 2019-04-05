@@ -6,7 +6,7 @@ import {deckAdding} from './AddDeck'
 
 class Decks extends Component{
   state = {
-      arrayDecks:[]
+      arrayDecks:['hi','deck2']
    }
   componentDidMount(){
     d=this.props.deckAdded
@@ -16,15 +16,14 @@ class Decks extends Component{
       c.push(d);
       AsyncStorage.setItem('decksAsy', JSON.stringify(c));
       this.setState({
-        arrayDecks: this.state.arrayDecks.concat(d)
+        arrayDecks: this.state.arrayDecks.concat(c)
       })
-      alert(c)
     });
   }
-  render(){
 
-    alert(this.props.arr)
-    dec=this.state.arr&&Object.keys(this.state.arrayDecks).map((key) => {
+  render(){
+    alert(this.state.arrayDecks)
+    dec=this.state.arrayDecks&&Object.keys(this.state.arrayDecks).map((key) => {
     return (
       <Text key={key}>{this.state.arrayDecks[key]}{"\n"}</Text>
     )
@@ -40,7 +39,26 @@ class Decks extends Component{
 }
 }
 
+{/*  render(){
 
+    alert(this.state.arr)
+    dec=this.props.arry&&Object.keys(this.props.arry).map((key) => {
+    return (
+      <Text key={key}>{this.props.arry[key]}{"\n"}</Text>
+    )
+ })
+ return(
+   <View>
+   <Text onPress={()=>this.props.navigation.navigate(
+     'DeckView'
+   )} style={styles.textdeco}>{dec}</Text>
+   <Text>{this.state.arrayDecks}</Text>
+   </View>
+ )
+}
+}
+
+*/}
 export default connect()(Decks)
 
 const styles = StyleSheet.create({

@@ -30,16 +30,29 @@ class AddDeck extends Component{
 
    SubmitSaveDeckAsync=() => {
      d=this.state.deckAdded
+     if(d===''){
+       AsyncStorage.getItem('decksAsy')
+       .then((decksAsy) => {
+         const c = decksAsy ? [] : [];
+         AsyncStorage.setItem('decksAsy', JSON.stringify(c));
+         this.setState({
+           arr: this.state.arr
+         })
+        alert(c)
+       });
+     }
+     else{
      AsyncStorage.getItem('decksAsy')
      .then((decksAsy) => {
        const c = decksAsy ? JSON.parse(decksAsy) : [];
        c.push(d);
        AsyncStorage.setItem('decksAsy', JSON.stringify(c));
        this.setState({
-         arr: this.state.arr.concat(d)
+         arr: this.state.arr.concat(c)
        })
-       alert(c)
+      alert(c)
      });
+}
    }
 
    clearAsyncStorage = async() => {
@@ -65,10 +78,10 @@ class AddDeck extends Component{
     onPress = {() => this.SubmitSaveDeckAsync()}>
     <Text style = {styles.submitButtonText}>Create Deck</Text>
     </TouchableOpacity>
-    {/*<TouchableOpacity style = {styles.submitButton}
+    <TouchableOpacity style = {styles.submitButton}
     onPress = {() => this.clearAsyncStorage()}>
     <Text style = {styles.submitButtonText}>clearAsyncStorage</Text>
-    </TouchableOpacity>*/}
+    </TouchableOpacity>
     {Decks ?<Decks arry={this.state.arr} deckAdded={this.state.deckAdded}/> : null}
     {/*{Ex?<Ex arry={this.state.arr}/>:null}*/}
 

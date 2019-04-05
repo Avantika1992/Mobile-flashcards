@@ -1,4 +1,4 @@
-import {DECKS,ADD_DECK} from '../actions'
+import {DECKS,ADD_DECK,ADD_CARD} from '../actions'
 
 function reducer(state={},action){
   switch(action.type){
@@ -10,6 +10,12 @@ function reducer(state={},action){
       return{
         ...state,
         ...action.dek
+      }
+    case ADD_CARD:
+      return{
+        ...state,
+        ...action.que,
+        ...action.ans
       }
   }
 }
