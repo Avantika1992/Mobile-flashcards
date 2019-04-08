@@ -1,23 +1,26 @@
-import {DECKS,ADD_DECK,ADD_CARD} from '../actions'
-
-function reducer(state={},action){
-  switch(action.type){
-    case DECKS:
-      return{
-        ...state,
-      }
-    case ADD_DECK:
-      return{
-        ...state,
-        ...action.dek
-      }
-    case ADD_CARD:
-      return{
-        ...state,
-        ...action.que,
-        ...action.ans
-      }
-  }
+import { GET_DECKS, GET_DECK, ADD_DECK, ADD_CARD_TO_DECK } from '../actions'
+const initState = {
+    decks: [],
+    deck: {
+        title: '',
+        questions: []
+    }
 }
-
-export default reducer
+export function decks (state = initState, action) {
+    switch (action.type) {
+        case GET_DECKS:
+            if(action.decks !== null && action.decks !== undefined)
+                return {
+                    ...state,
+                    decks: Object.keys(action.decks).map(function(k) { return action.decks[k] })
+                }
+            return state
+        case GET_DECK:
+            return {
+                ...state,
+                deck: action.deck
+            }
+        default:
+            return state
+    }
+}

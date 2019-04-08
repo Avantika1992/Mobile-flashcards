@@ -1,6 +1,12 @@
+export const white = '#fff'
+export const primary = '#669fbb'
+export const success = '#47a447'
+export const danger = '#d2322d'
+export const action = '#01608f'
+export const secondary = '#123456'
+
 export const purple = '#292477'
 export const gray = '#757575'
-export const white = '#fff'
 export const red = '#b71845'
 export const orange = '#f26f28'
 export const blue = '#4e4cb8'

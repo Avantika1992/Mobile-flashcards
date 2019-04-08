@@ -1,51 +1,57 @@
 import React from 'react';
-import { StyleSheet, Text, View,Platform,StatusBar} from 'react-native';
+import {
+  View,
+  Platform,
+  StatusBar
+} from 'react-native';
+import { createStore } from 'redux'
+import { Provider } from 'react-redux'
+import { createBottomTabNavigator,createAppContainer,createStackNavigator} from 'react-navigation'
+import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons'
+import { primary, white } from './utils/colors'
+import { Constants } from 'expo'
+import { decks} from './reducers'
 import AddDeck from './components/AddDeck'
 import Decks from './components/Decks'
-import {createStore} from 'redux'
-import {Provider} from 'react-redux'
-import { createBottomTabNavigator,createAppContainer,createStackNavigator} from 'react-navigation'
-import {purple,white} from './utils/colors'
-import {FontAwesome,Ionicons} from '@expo/vector-icons'
-import {Constants} from 'expo'
-import reducer from './reducers/index'
-import DeckView from './components/DeckView'
+import DeckDetails from './components/DeckDetails'
 import AddCard from './components/AddCard'
-import Ex from './components/example'
+import Quiz from './components/Quiz'
+import { setLocalNotification } from './utils/helpers'
 
-function StatusBarProj({backgroundColor,...props}){
-  return(
-    <View style={{backgroundColor,height:Constants.statusBarHeight}}>
+function AppStatusBar ({ backgroundColor, ...props}) {
+  return (
+    <View style={{ backgroundColor, height: Constants.statusBarHeight }}>
       <StatusBar translucent backgroundColor={backgroundColor} {...props} />
     </View>
   )
 }
 
 const Tabs = createBottomTabNavigator({
-
   Decks: {
     screen: Decks,
     navigationOptions: {
       tabBarLabel: 'Decks',
-      tabBarIcon: ({ tintColor }) => <Ionicons name='md-folder-open' size={30} color={tintColor} />
-    },
+      tabBarIcon: ({ tintColor }) => <MaterialCommunityIcons name='cards' size={25} color={tintColor} />
+    }
   },
   AddDeck: {
     screen: AddDeck,
     navigationOptions: {
-      tabBarLabel: 'Add Deck',
-      tabBarIcon: ({ tintColor }) => <FontAwesome name='plus-square' size={30} color={tintColor} />
-    },
-  },
+      tabBarLabel: 'Add New Deck',
+      tabBarIcon: ({ tintColor }) => <Ionicons name='ios-add' size={25} color={tintColor} />
+    }
+  }
 }, {
   navigationOptions: {
     header: null
   },
+  animationEnabled: true,
+  lazy: true,
   tabBarOptions: {
-    activeTintColor: Platform.OS === 'ios' ? purple : white,
+    activeTintColor: Platform.OS === 'ios' ? primary : white,
     style: {
-      height: 56,
-      backgroundColor: Platform.OS === 'ios' ? white : purple,
+      height: 50,
+      backgroundColor: Platform.OS === 'ios' ? white : primary,
       shadowColor: 'rgba(0, 0, 0, 0.24)',
       shadowOffset: {
         width: 0,
@@ -55,81 +61,53 @@ const Tabs = createBottomTabNavigator({
       shadowOpacity: 1
     }
   }
-});
+})
 
 const NavTabs=createAppContainer(Tabs)
 
-const StackNav=createStackNavigator({
-  Home:{
-    screen:NavTabs,
+const MainNav = createStackNavigator({
+  Home: {
+    screen: Tabs
   },
-  DeckView:{
-    screen:DeckView,
-    navigationOptions:{
-      title:'Decks',
-      headerTintColor:white,
-      headerStyle:{
-        backgroundColor:purple,
-      }
-    }
+  Deck: {
+    screen: DeckDetails
+  },
+  AddCard: {
+    screen: AddCard
+  },
+  Quiz: {
+    screen: Quiz
+  }
+},
+{
+  navigationOptions: {
+    headerStyle: {
+      backgroundColor: primary,
+    },
+    headerTitleStyle: {
+      color: white
+    },
+    headerTintColor: white,
   }
 })
-const StackNavi=createAppContainer(StackNav)
 
-const RootStackNav=createStackNavigator({
-  Home:{
-    screen:StackNavi
-  },
-  AddCard:{
-    screen:AddCard,
-    navigationOptions:{
-      title:'Deck Details',
-      headerTintColor:white,
-      headerStyle:{
-        backgroundColor:purple,
-      }
-    }
-  }
-})
-const RootStackNavi=createAppContainer(RootStackNav)
+const StackNavi=createAppContainer(MainNav)
 
 export default class App extends React.Component {
-  state = {
-      deckAdded: ''
-   }
+
+  componentDidMount() {
+    setLocalNotification()
+  }
+
 
   render() {
     return (
-      <Provider store={createStore(reducer)}>
-       <View style={styles.container}>
-        <StatusBarProj backgroundColor={purple} barStyle='light-content'/>
-        <RootStackNavi/>
-        {/*<NavTabs
-        screenProps={{deckAdded:this.state.deckAdded}}/>*/}
-       </View>
+      <Provider store={createStore(decks)}>
+        <View style={{ flex: 1 }}>
+          <AppStatusBar backgroundColor={primary} barStyle="light-content" />
+          <StackNavi  />
+        </View>
       </Provider>
-    );
+    )
   }
 }
-
-const styles=StyleSheet.create({
-  container:{
-    flex:1,
-    marginLeft:0,
-    marginRight:0,
-    alignItems:'stretch',
-    justifyContent:'center'
-  },
-  btn:{
-    backgroundColor:'#E53224',
-    padding:10,
-    paddingLeft:50,
-    paddingRight:50,
-    justifyContent:'center',
-    alignItems:'center',
-    borderRadius:5,
-  },
-  btnText:{
-    color:'#fff'
-  }
-})

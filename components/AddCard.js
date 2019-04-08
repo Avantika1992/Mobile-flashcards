@@ -1,123 +1,95 @@
-import React,{Component} from 'react'
-import {View,Text,Slider,StyleSheet,TextInput,ListItem,List,TouchableOpacity,AsyncStorage} from 'react-native'
-import {deckAdding} from './AddDeck'
-import {purple,white,black,red} from '../utils/colors'
-import {addCard} from '../actions'
-import {connect} from 'react-redux'
+import React, { Component } from 'react';
+import {
+    Text,
+    View,
+    TextInput,
+    TouchableOpacity,
+    Platform,
+    Alert
+} from 'react-native';
+import { FontAwesome, Ionicons } from '@expo/vector-icons'
+import { primary, white, danger } from '../utils/colors'
+import { addDeck } from '../actions'
+import { addCardToDeck } from '../utils/api'
+import { styles } from '../utils/styles'
 
-class AddCard extends Component{
-  state = {
-      que: '',
-      ans:'',
-      qu:[]
-   }
-  submit=()=>{
-    this.props.dispatch(addCard(this.state.que,this.state.ans))
-    let que = this.state.que
-    let ans = this.state.ans
-    if(que===''||ans===''){
-      AsyncStorage.getItem('cardsAsy')
-      .then((cardsAsy) => {
-        const c = cardsAsy ? [] : [];
-        AsyncStorage.setItem('cardsAsy', JSON.stringify(c));
-        this.setState({
-          qu: this.state.qu
-        })
-       alert(this.state.qu)
-      });
+class AddCard extends Component {
+    state = {
+        question: '',
+        answer: '',
+        valid: true
     }
-    else{
-    AsyncStorage.getItem('cardsAsy')
-    .then((cardsAsy) => {
-      const c = cardsAsy ? JSON.parse(cardsAsy) : [];
-      c.push(que,ans);
-      AsyncStorage.setItem('cardsAsy', JSON.stringify(c));
-      this.setState({
-        qu: this.state.qu.concat(c)
-      })
-     alert(this.state.qu)
-    });
+
+    
+    static navigationOptions = ({ navigation }) => {
+        return {
+            title: 'Add a new card'
+        }
+    }
+
+
+    render() {
+        return (
+            <View style={styles.container}>
+                <View style={{ marginBottom: 10 }}>
+                    <TextInput
+                        style={[styles.input, (!this.state.valid) ? styles.errorInput : '']}
+                        ref="question"
+                        onChangeText={(question) => this.setState({question})}
+                        placeholderTextColor={(!this.state.valid) ? danger : '#ddd'}
+                        placeholder="Enter a question" />
+                </View>
+                <View style={{ marginBottom: 10 }}>
+                    <TextInput
+                        style={[styles.input, (!this.state.valid) ? styles.errorInput : '']}
+                        ref="answer"
+                        onChangeText={(answer) => this.setState({answer})}
+                        placeholderTextColor={(!this.state.valid) ? danger : '#ddd'}
+                        placeholder="Enter the answer" />
+                </View>
+                <View style={{ marginTop: 10 }}>
+                    <SubmitBtn onPress={this.addCard} />
+                </View>
+            </View>
+        )
+    }
+
+    addCard = () => {
+        if(this.state.question && this.state.answer) {
+            addCardToDeck(this.props.navigation.state.params.title, this.state)
+            Alert.alert(
+                'Add Another?',
+                'Would you like to add another deck?',
+                [
+                    { text: 'Yes',
+                    onPress: () => {
+                        this.refs['question'].setNativeProps({text: ''});
+                        this.refs['answer'].setNativeProps({text: ''});
+                        this.refs['question'].focus();
+                    }},
+                    { text: 'No', onPress: () => {
+                        this.props.navigation.goBack()
+                        this.props.navigation.state.params.refresh()
+                    }}
+                ],
+                { cancelable: false }
+            )
+        }
+        else
+            this.setState({ valid: false })
+
+    }
 }
-  }
-  clearAsyncStorage = async() => {
-   AsyncStorage.clear();
-  }
 
-  render(){
-  return(
-   <View>
-   <TextInput style = {styles.input}
-            underlineColorAndroid = "transparent"
-            placeholder = "Question"
-            placeholderTextColor = "lightgrey"
-            autoCapitalize = "none"
-            onChangeText={(que) => this.setState({que})}
-            />
-    <TextInput style = {styles.input}
-             underlineColorAndroid = "transparent"
-             placeholder = "Answer"
-             placeholderTextColor = "lightgrey"
-             autoCapitalize = "none"
-             onChangeText={(ans) => this.setState({ans})}
-              />
-    <TouchableOpacity  style = {styles.submitButtondel}>
-    <Text onPress={this.submit} style = {styles.submitButtonTextdel}>Submit</Text>
-    </TouchableOpacity>
-    <TouchableOpacity style = {styles.submitButton}
-    onPress = {() => this.clearAsyncStorage()}>
-    <Text style = {styles.submitButtonText}>clearAsyncStorage</Text>
-    </TouchableOpacity>
-    <Text>{this.state.que}</Text>
-   </View>
- )
-}
+
+function SubmitBtn({ onPress }) {
+    return (
+        <TouchableOpacity
+            style={Platform.OS === 'ios' ? styles.iosSubmitBtn : styles.AndroidSubmitBtn}
+            onPress={onPress}>
+            <Text style={styles.submitBtnText}>Submit</Text>
+        </TouchableOpacity>
+    )
 }
 
-
-export default connect()(AddCard)
-
-const styles = StyleSheet.create({
-   container: {
-      paddingTop: 23
-   },
-   textDeck:{
-     textAlign: 'center',
-     fontSize: 30,
-     margin:10
-   },
-   textCard:{
-     textAlign: 'center',
-     fontSize: 20,
-     margin:10,
-     color: 'grey'
-   },
-   input: {
-      margin: 15,
-      height: 40,
-      borderColor: purple,
-      borderWidth: 1,
-      margin:10
-   },
-   submitButton: {
-      backgroundColor: purple,
-      alignItems: 'center',
-      padding: 10,
-      margin: 15,
-      height: 40,
-      margin:60
-   },
-   submitButtonText:{
-      color: white
-   },
-   submitButtondel: {
-      backgroundColor: white,
-      alignItems: 'center',
-      padding: 10,
-      margin: 15,
-      height: 40,
-      margin:60
-   },
-   submitButtonTextdel:{
-      color: red
-   }
-})
+export default AddCard
