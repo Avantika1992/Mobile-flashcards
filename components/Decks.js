@@ -13,7 +13,7 @@ import { Ionicons } from '@expo/vector-icons'
 import sortBy from 'sort-by';
 import { SearchBar } from 'react-native-elements'
 import { getDecks } from '../actions'
-import { primary, white, action } from '../utils/colors'
+import { white ,purple} from '../utils/colors'
 import { styles } from '../utils/styles'
 import { fetchAllDecks } from '../utils/api'
 import { loadDecks } from '../utils/dispatches'
@@ -59,7 +59,7 @@ class Decks extends Component {
                         <Text style={styles.mutedText}>{item.questions.length} cards</Text>
                     </View>
                     <View style={{flex: 1, marginRight: 20, alignItems: 'flex-end', justifyContent: 'center'}}>
-                        <Text><Ionicons name="ios-arrow-forward" color={primary} size={30} /></Text>
+                        <Text><Ionicons name="ios-arrow-forward" color={purple} size={30} /></Text>
                     </View>
                 </View>
             </TouchableHighlight>
@@ -73,7 +73,7 @@ class Decks extends Component {
                 style={{
                     flex: 1,
                     height: 1,
-                    backgroundColor: primary
+                    backgroundColor: purple
                 }}
             />
         )
@@ -87,7 +87,7 @@ class Decks extends Component {
 
     _renderHeader = () => {
         const ph = "Type a deck name here..."
-        const containerStyle = { backgroundColor: primary, borderColor: primary }
+        const containerStyle = { backgroundColor: purple, borderColor: purple }
         const inputStyle = { backgroundColor: white }
         return (
             Platform.OS === 'ios'
@@ -136,7 +136,7 @@ class Decks extends Component {
                     ItemSeparatorComponent={this._renderSeparator}
                     keyExtractor={this._keyExtractor}
                     extraData={this.props}
-                    ListHeaderComponent={this._renderHeader}
+                    //ListHeaderComponent={this._renderHeader}
                     refreshing={this.state.refreshing}
                     onRefresh={this.handleRefresh}
                   />

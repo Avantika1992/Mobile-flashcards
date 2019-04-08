@@ -1,0 +1,4 @@
+->This is a react-native mobile application
+->clone the project and open terminal window and navigate to project folder, run npm install and npm start
+->install expo and scan QR-Code
+->This app is tested on Android device

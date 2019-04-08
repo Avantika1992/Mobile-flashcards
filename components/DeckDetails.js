@@ -8,7 +8,7 @@ import {
     ActivityIndicator
 } from 'react-native';
 import { getDeck } from '../actions'
-import { primary } from '../utils/colors'
+import { purple } from '../utils/colors'
 import { styles } from '../utils/styles'
 import { fetchDeck } from '../utils/api'
 
@@ -76,7 +76,7 @@ class DeckDetails extends Component {
         const { deck } = this.props
         return (
             <View style={styles.container}>
-                <ActivityIndicator animating={this.state.loading} color={primary} />
+                <ActivityIndicator animating={this.state.loading} color={purple} />
                 {this.deckView(deck)}
             </View>
         )

@@ -8,7 +8,7 @@ import { createStore } from 'redux'
 import { Provider } from 'react-redux'
 import { createBottomTabNavigator,createAppContainer,createStackNavigator} from 'react-navigation'
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons'
-import { primary, white } from './utils/colors'
+import { primary, white,purple } from './utils/colors'
 import { Constants } from 'expo'
 import { decks} from './reducers'
 import AddDeck from './components/AddDeck'
@@ -31,14 +31,14 @@ const Tabs = createBottomTabNavigator({
     screen: Decks,
     navigationOptions: {
       tabBarLabel: 'Decks',
-      tabBarIcon: ({ tintColor }) => <MaterialCommunityIcons name='cards' size={25} color={tintColor} />
+      tabBarIcon: ({ tintColor }) => <Ionicons name='md-folder-open' size={30} color={tintColor} />
     }
   },
   AddDeck: {
     screen: AddDeck,
     navigationOptions: {
       tabBarLabel: 'Add New Deck',
-      tabBarIcon: ({ tintColor }) => <Ionicons name='ios-add' size={25} color={tintColor} />
+      tabBarIcon: ({ tintColor }) => <Ionicons name='ios-add' size={30} color={tintColor} />
     }
   }
 }, {
@@ -48,10 +48,10 @@ const Tabs = createBottomTabNavigator({
   animationEnabled: true,
   lazy: true,
   tabBarOptions: {
-    activeTintColor: Platform.OS === 'ios' ? primary : white,
+    activeTintColor: Platform.OS === 'ios' ? purple : white,
     style: {
       height: 50,
-      backgroundColor: Platform.OS === 'ios' ? white : primary,
+      backgroundColor: Platform.OS === 'ios' ? white : purple,
       shadowColor: 'rgba(0, 0, 0, 0.24)',
       shadowOffset: {
         width: 0,
@@ -82,7 +82,7 @@ const MainNav = createStackNavigator({
 {
   navigationOptions: {
     headerStyle: {
-      backgroundColor: primary,
+      backgroundColor: purple,
     },
     headerTitleStyle: {
       color: white
@@ -104,7 +104,7 @@ export default class App extends React.Component {
     return (
       <Provider store={createStore(decks)}>
         <View style={{ flex: 1 }}>
-          <AppStatusBar backgroundColor={primary} barStyle="light-content" />
+          <AppStatusBar backgroundColor={purple} barStyle="light-content" />
           <StackNavi  />
         </View>
       </Provider>

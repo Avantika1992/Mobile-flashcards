@@ -10,7 +10,7 @@ import {
     KeyboardAvoidingView,
     Keyboard
 } from 'react-native';
-import { primary, white, danger } from '../utils/colors'
+import { white, red,purple } from '../utils/colors'
 import { addDeck } from '../actions'
 import { saveDeckTitle } from '../utils/api'
 import { styles } from '../utils/styles'
@@ -22,7 +22,7 @@ class AddDeck extends Component {
         valid: true
     }
 
-    
+
     render() {
         return (
             <KeyboardAvoidingView style={styles.container} behavior="padding">
@@ -38,7 +38,7 @@ class AddDeck extends Component {
                         style={[styles.input, (!this.state.valid) ? styles.errorInput : '']}
                         value={this.state.title}
                         onChangeText={(title) => this.setState({title})}
-                        placeholderTextColor={(!this.state.valid) ? danger : '#333'}
+                        placeholderTextColor={(!this.state.valid) ? red : '#333'}
                         placeholder="Enter a deck title"
                     />
                 </View>

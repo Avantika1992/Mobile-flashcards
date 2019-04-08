@@ -8,7 +8,7 @@ import {
     Alert
 } from 'react-native';
 import { FontAwesome, Ionicons } from '@expo/vector-icons'
-import { primary, white, danger } from '../utils/colors'
+import {white, danger } from '../utils/colors'
 import { addDeck } from '../actions'
 import { addCardToDeck } from '../utils/api'
 import { styles } from '../utils/styles'
@@ -20,7 +20,7 @@ class AddCard extends Component {
         valid: true
     }
 
-    
+
     static navigationOptions = ({ navigation }) => {
         return {
             title: 'Add a new card'

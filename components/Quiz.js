@@ -10,7 +10,7 @@ import {
     Alert
 } from 'react-native';
 import { connect } from 'react-redux'
-import { primary, white, success, danger } from '../utils/colors'
+import { white, green, red} from '../utils/colors'
 import { getDeck } from '../actions'
 import { fetchDeck } from '../utils/api'
 import { styles } from '../utils/styles'
@@ -74,7 +74,7 @@ class Quiz extends Component {
         return (
             <View style={{flex: 1}}>
                 <TouchableOpacity
-                    style={[(Platform.OS === 'ios') ? styles.iosSubmitBtn : styles.AndroidBtn, { marginBottom: 10, backgroundColor: success }]}
+                    style={[(Platform.OS === 'ios') ? styles.iosSubmitBtn : styles.AndroidBtn, { marginBottom: 10, backgroundColor: green }]}
                     onPress={() => {
                         this.setState(
                             {
@@ -87,7 +87,7 @@ class Quiz extends Component {
                 </TouchableOpacity>
 
                 <TouchableOpacity
-                    style={[(Platform.OS === 'ios') ? styles.iosSubmitBtn : styles.AndroidBtn, { backgroundColor: danger }]}
+                    style={[(Platform.OS === 'ios') ? styles.iosSubmitBtn : styles.AndroidBtn, { backgroundColor: red }]}
                     onPress={() => {
                         this.nextQuestion()
                     }} >
@@ -107,7 +107,7 @@ class Quiz extends Component {
                         onPress={() => {
                             this.flipCard()
                         }} >
-                        <Text style={{color: danger, fontWeight: '600'}}>Show Question</Text>
+                        <Text style={{color: red, fontWeight: '600'}}>Show Question</Text>
                     </TouchableOpacity>
                 </View>
             </View>
@@ -124,7 +124,7 @@ class Quiz extends Component {
                         onPress={() => {
                             this.flipCard()
                         }}>
-                        <Text style={{color: danger, fontWeight: '600'}}>Show Answer</Text>
+                        <Text style={{color: red, fontWeight: '600'}}>Show Answer</Text>
                     </TouchableOpacity>
                 </View>
             </View>

@@ -42,10 +42,10 @@ export const styles = StyleSheet.create({
         borderWidth: 1
     },
     errorInput: {
-        borderColor: colors.danger
+        borderColor: colors.red
     },
     errorText: {
-        color: colors.danger
+        color: colors.red
     },
     listItem: {
         flex: 1,
@@ -59,7 +59,7 @@ export const styles = StyleSheet.create({
         margin: 10
     },
     iosSubmitBtn: {
-        backgroundColor: colors.action,
+        backgroundColor: colors.purple,
         padding: 10,
         borderRadius: 7,
         height: 45,
@@ -67,7 +67,7 @@ export const styles = StyleSheet.create({
         marginRight: 40,
       },
       AndroidSubmitBtn: {
-        backgroundColor: colors.action,
+        backgroundColor: colors.purple,
         padding: 10,
         paddingLeft: 30,
         paddingRight: 30,
@@ -78,7 +78,7 @@ export const styles = StyleSheet.create({
         alignItems: 'center',
       },
       AndroidBtn: {
-        backgroundColor: colors.action,
+        backgroundColor: colors.purple,
         padding: 10,
         marginLeft: 30,
         marginRight: 30,
