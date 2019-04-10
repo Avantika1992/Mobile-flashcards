@@ -56,10 +56,10 @@ class Quiz extends Component {
                 'Score: ' + Math.round((this.state.correct/questions.length)*100) + '%',
                 `You correctly answered ${this.state.correct} out of ${questions.length} questions.  Would you like to try again?`,
                 [
-                    { text: 'Yes', onPress: () => {
+                    { text: 'Restart Quiz', onPress: () => {
                         this.setState({ correct: 0, index: 0, showAnswer: false })
                     }},
-                    { text: 'No',
+                    { text: 'Back to Deck',
                     onPress: () => {
                         this.props.navigation.goBack()
                     }},
@@ -70,7 +70,7 @@ class Quiz extends Component {
     }
 
     showQuizButtons = (questions) => {
-        const { correct } = this.state
+        const { correct,showAnswer } = this.state
         return (
             <View style={{flex: 1}}>
                 <TouchableOpacity
@@ -78,7 +78,8 @@ class Quiz extends Component {
                     onPress={() => {
                         this.setState(
                             {
-                                correct: correct + 1
+                                correct: correct + 1,
+                                showAnswer:false
                             },
                             this.nextQuestion
                         )
@@ -90,6 +91,9 @@ class Quiz extends Component {
                     style={[(Platform.OS === 'ios') ? styles.iosSubmitBtn : styles.AndroidBtn, { backgroundColor: red }]}
                     onPress={() => {
                         this.nextQuestion()
+                        this.setState({
+                            showAnswer: false
+                        })
                     }} >
                     <Text style={styles.submitBtnText}>Incorrect</Text>
                 </TouchableOpacity>
